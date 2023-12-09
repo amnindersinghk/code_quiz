@@ -26,5 +26,5 @@ Mock-Up
 The following animation demonstrates the application functionality:
 
 A GIF demonstrates a functioning quiz with a timer.
-live link - file:///Users/amnindersingh/Documents/bootcamp/homeworks/code_quiz/index.html
+live link - https://amnindersinghk.github.io/code_quiz/)https://amnindersinghk.github.io/code_quiz/
 
