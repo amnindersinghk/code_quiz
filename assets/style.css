@@ -1,0 +1,21 @@
+body {
+    font-family: 'Arial', sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+#quiz-container {
+    text-align: center;
+    margin: 20px;
+}
+
+#score-container {
+    display: none;
+    text-align: center;
+}
+
+#high-scores-list {
+    list-style-type: none;
+    padding: 0;
+}
+
