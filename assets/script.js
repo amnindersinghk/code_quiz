@@ -1,13 +1,46 @@
-// Define quiz questions and answers
 const questions = [
-    { question: "What is the capital of France?", choices: ["Paris", "Berlin", "London", "Madrid"], correctAnswer: "Paris" },
+    {
+        question: "What is the capital of France?",
+        choices: ["Paris", "Berlin", "London", "Madrid"],
+        correctAnswer: "Paris"
+    },
+    {
+        question: "Which planet is known as the Red Planet?",
+        choices: ["Venus", "Mars", "Jupiter", "Saturn"],
+        correctAnswer: "Mars"
+    },
+    {
+        question: "What is the largest mammal in the world?",
+        choices: ["Elephant", "Blue Whale", "Giraffe", "Hippopotamus"],
+        correctAnswer: "Blue Whale"
+    },
+    {
+        question: "In which year did World War I begin?",
+        choices: ["1914", "1915", "1916", "1917"],
+        correctAnswer: "1914"
+    },
+    {
+        question: "Who wrote 'Romeo and Juliet'?",
+        choices: ["Charles Dickens", "William Shakespeare", "Jane Austen", "Mark Twain"],
+        correctAnswer: "William Shakespeare"
+    },
+    {
+        question: "What is the capital of Japan?",
+        choices: ["Beijing", "Seoul", "Tokyo", "Bangkok"],
+        correctAnswer: "Tokyo"
+    },
+    {
+        question: "What is the main ingredient in guacamole?",
+        choices: ["Avocado", "Tomato", "Onion", "Garlic"],
+        correctAnswer: "Avocado"
+    },
     // Add more questions as needed
 ];
 
 let currentQuestionIndex = 0;
 let timer;
 let score = 0;
-const timeLimit = 60; // seconds
+let timeLimit = 60;
 
 const startBtn = document.getElementById("start-btn");
 const questionContainer = document.getElementById("question-container");
@@ -16,29 +49,27 @@ const resultContainer = document.getElementById("result-container");
 const submitBtn = document.getElementById("submit-btn");
 const scoreContainer = document.getElementById("score-container");
 const highScoresList = document.getElementById("high-scores-list");
+const timerDisplay = document.getElementById("timer-display");
 
-// Event listener for start button
 startBtn.addEventListener("click", startQuiz);
-
-// Event listener for submit button
 submitBtn.addEventListener("click", saveHighScore);
 
 function startQuiz() {
     startBtn.style.display = "none";
     score = 0;
     currentQuestionIndex = 0;
+    timeLimit = 60;
+    updateTimerDisplay();
     displayNextQuestion();
     startTimer();
 }
 
 function displayNextQuestion() {
-    // Check if there are more questions
     if (currentQuestionIndex < questions.length) {
         const currentQuestion = questions[currentQuestionIndex];
         questionContainer.textContent = currentQuestion.question;
         choicesContainer.innerHTML = "";
 
-        // Create choice buttons
         currentQuestion.choices.forEach((choice, index) => {
             const choiceBtn = document.createElement("button");
             choiceBtn.textContent = choice;
@@ -47,23 +78,19 @@ function displayNextQuestion() {
         });
 
     } else {
-        // No more questions, end the quiz
         endQuiz();
     }
 }
 
 function checkAnswer(userChoice, correctAnswer) {
     if (userChoice === correctAnswer) {
-        // Correct answer, increase score
         score += 10;
         resultContainer.textContent = "Correct!";
     } else {
-        // Incorrect answer, deduct time
         resultContainer.textContent = "Incorrect!";
         timeLimit -= 10;
     }
 
-    // Move to the next question
     currentQuestionIndex++;
     displayNextQuestion();
 }
@@ -72,8 +99,8 @@ function startTimer() {
     timer = setInterval(() => {
         if (timeLimit > 0) {
             timeLimit--;
+            updateTimerDisplay();
         } else {
-            // Time is up, end the quiz
             endQuiz();
         }
     }, 1000);
@@ -85,6 +112,11 @@ function endQuiz() {
     choicesContainer.innerHTML = "";
     resultContainer.textContent = "Your final score is " + score;
     submitBtn.style.display = "block";
+    updateTimerDisplay();
+}
+
+function updateTimerDisplay() {
+    timerDisplay.textContent = `Time: ${timeLimit}s`;
 }
 
 function saveHighScore() {
@@ -92,7 +124,7 @@ function saveHighScore() {
     const highScore = { initials, score };
     const highScores = JSON.parse(localStorage.getItem("highScores")) || [];
     highScores.push(highScore);
-    highScores.sort((a, b) => b.score - a.score); // Sort in descending order
+    highScores.sort((a, b) => b.score - a.score);
     localStorage.setItem("highScores", JSON.stringify(highScores));
     displayHighScores();
 }
