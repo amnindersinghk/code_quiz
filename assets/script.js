@@ -125,7 +125,8 @@ function saveHighScore() {
     const highScores = JSON.parse(localStorage.getItem("highScores")) || [];
     highScores.push(highScore);
     highScores.sort((a, b) => b.score - a.score);
-    localStorage.setItem("highScores", JSON.stringify(highScores));
+    const top5HighScores = highScores.slice(0, 5);
+    localStorage.setItem("highScores", JSON.stringify(top5HighScores));
     displayHighScores();
 }
 
